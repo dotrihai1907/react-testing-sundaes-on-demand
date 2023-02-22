@@ -9,17 +9,19 @@ export const Options = ({ optionType }) => {
   // optionsType is 'scoops' or 'toppings'
   useEffect(() => {
     axios
-      .get(`http://localhost:${optionType}`)
-      .then((response) => setItems(response.data))
+      .get(`http://localhost:3030/${optionType}`)
+      .then((response) => {
+        setItems(response.data);
+      })
       .catch((error) => {
         // handle error response
       });
   }, [optionType]);
 
-  const ItemComponent = optionType === "scoops" ? <ScoopOption /> : null;
+  const ItemComponent = optionType === "scoops" ? ScoopOption : null;
 
   return (
-    <div>
+    <Row>
       {items?.map((item) => (
         <ItemComponent
           key={item.name}
@@ -27,6 +29,6 @@ export const Options = ({ optionType }) => {
           imagePath={item.imagePath}
         />
       ))}
-    </div>
+    </Row>
   );
 };
